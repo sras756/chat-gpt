@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT Clone</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #343541;
+            --sidebar-bg: #202123;
+            --message-ai-bg: #444654;
+            --message-user-bg: #343541;
+            --text-color: #ececf1;
+            --text-muted: #8e8ea0;
+            --input-bg: #40414f;
+            --border-color: #565869;
+        }
+        
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-color);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            height: 100vh;
+            width: 260px;
+            position: fixed;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            margin-left: 260px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .message {
+            padding: 20px;
+            display: flex;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .message-ai {
+            background-color: var(--message-ai-bg);
+        }
+        
+        .message-user {
+            background-color: var(--message-user-bg);
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .avatar-ai {
+            background-color: #10a37f;
+        }
+        
+        .avatar-user {
+            background-color: #5436da;
+        }
+        
+        .message-content {
+            flex: 1;
+        }
+        
+        .input-container {
+            padding: 20px;
+            position: relative;
+        }
+        
+        .input-box {
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            border-radius: 6px;
+            padding: 12px 50px 12px 15px;
+            width: 100%;
+            resize: none;
+        }
+        
+        .input-box:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        
+        .send-btn {
+            position: absolute;
+            right: 30px;
+            bottom: 30px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+        }
+        
+        .send-btn:hover {
+            color: var(--text-color);
+        }
+        
+        .new-chat-btn {
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+        }
+        
+        .new-chat-btn:hover {
+            background-color: #2b2c2f;
+        }
+        
+        .sidebar-item {
+            padding: 10px;
+            margin: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .sidebar-item:hover {
+            background-color: #2b2c2f;
+        }
+        
+        .sidebar-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 15px;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar d-flex flex-column">
+        <button class="new-chat-btn">
+            <i class="fas fa-plus me-2"></i> New chat
+        </button>
+        
+        <div class="flex-grow-1 overflow-auto">
+            <div class="sidebar-item">
+                <i class="fas fa-comment me-2"></i> How to use Python?
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-comment me-2"></i> Explain quantum computing
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-comment me-2"></i> JavaScript tips
+            </div>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="sidebar-item">
+                <i class="fas fa-user me-2"></i> Upgrade to Plus
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-moon me-2"></i> Dark mode
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-question-circle me-2"></i> Help & FAQ
+            </div>
+            <div class="sidebar-item">
+                <i class="fas fa-sign-out-alt me-2"></i> Log out
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Chat Area -->
+        <div class="chat-container">
+            <!-- AI Message -->
+            <div class="message message-ai">
+                <div class="avatar avatar-ai">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hello! I'm ChatGPT, an AI assistant. How can I help you today?</p>
+                </div>
+            </div>
+            
+            <!-- User Message -->
+            <div class="message message-user">
+                <div class="avatar avatar-user">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="message-content">
+                    <p>Can you explain how neural networks work in simple terms?</p>
+                </div>
+            </div>
+            
+            <!-- AI Message -->
+            <div class="message message-ai">
+                <div class="avatar avatar-ai">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Certainly! Think of a neural network like a team of people solving a puzzle together:</p>
+                    <ol>
+                        <li>Each person (neuron) looks at a small piece of information</li>
+                        <li>They share what they notice with others</li>
+                        <li>Together they combine these observations</li>
+                        <li>Gradually they work toward solving the whole puzzle</li>
+                    </ol>
+                    <p>The network "learns" by adjusting how much attention to pay to each person's observations based on what helps solve similar puzzles correctly in the past.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-group">
+                <textarea class="input-box" rows="1" placeholder="Message ChatGPT..."></textarea>
+                <button class="send-btn">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-muted small mt-2 text-center">ChatGPT can make mistakes. Consider checking important information.</p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Auto-resize textarea
+        const textarea = document.querySelector('.input-box');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+        
+        // Sample functionality for new chat button
+        document.querySelector('.new-chat-btn').addEventListener('click', function() {
+            const chatContainer = document.querySelector('.chat-container');
+            chatContainer.innerHTML = `
+                <div class="message message-ai">
+                    <div class="avatar avatar-ai">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>Hello! I'm ChatGPT, an AI assistant. How can I help you today?</p>
+                    </div>
+                </div>
+            `;
+            textarea.value = '';
+            textarea.style.height = 'auto';
+        });
+        
+        // Sample functionality for send button
+        document.querySelector('.send-btn').addEventListener('click', function() {
+            const message = textarea.value.trim();
+            if (message) {
+                const chatContainer = document.querySelector('.chat-container');
+                
+                // Add user message
+                chatContainer.innerHTML += `
+                    <div class="message message-user">
+                        <div class="avatar avatar-user">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>${message}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Clear input
+                textarea.value = '';
+                textarea.style.height = 'auto';
+                
+                // Add "AI is typing" indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message message-ai';
+                typingIndicator.innerHTML = `
+                    <div class="avatar avatar-ai">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p><i class="fas fa-ellipsis-h"></i></p>
+                    </div>
+                `;
+                chatContainer.appendChild(typingIndicator);
+                
+                // Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                // Simulate AI response after delay
+                setTimeout(() => {
+                    typingIndicator.remove();
+                    
+                    // Add AI response
+                    chatContainer.innerHTML += `
+                        <div class="message message-ai">
+                            <div class="avatar avatar-ai">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>I'm a ChatGPT clone, so my responses are simulated. In a real implementation, this would connect to an AI API.</p>
+                                <p>You asked: "${message}"</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Scroll to bottom
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 1500);
+            }
+        });
+    </script>
+</body>
+</html>
